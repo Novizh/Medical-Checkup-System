@@ -1,0 +1,52 @@
+<?php
+	include "../../configuration/connection.php";
+	$user = $_GET['id'];
+	$query = mysqli_query($connection,"SELECT * FROM checkup_result_tb WHERE patient_id='$user'");
+	$fetch = mysqli_fetch_array($query);
+	$patient_query = mysqli_query($connection,"SELECT * FROM patient_tb WHERE patient_id='$fetch[patient_id]'");
+	$patient_fetch = mysqli_fetch_array($patient_query);
+	require('print/fpdf.php');
+	$pdf = new FPDF('p','mm','A4');
+	$pdf->AddPage();
+	$pdf->SetFont('Arial','B',16);
+	$pdf->Cell(0,7,'Medical Checkup System',0,1,'C');
+	$pdf->SetFont('Arial','B',12);
+	$pdf->Cell(0,6,'Hasil Analisa',0,1,'C');
+	$pdf->Cell(10,7,'',0,1);
+	$pdf->SetFont('Arial','',12);
+	$pdf->Cell(40,6,'Nama Pasien ',0,0);
+	$pdf->Cell(3,6,':',0,0);
+	$pdf->Cell(0,6,$patient_fetch['name'] ,0,1);
+	$pdf->Cell(40,6,'Jenis Kelamin ',0,0);
+	$pdf->Cell(3,6,':',0,0);
+	$pdf->Cell(0,6,$patient_fetch['gender'] ,0,1);
+	$pdf->Cell(40,6,'Usia',0,0);
+	$pdf->Cell(3,6,':',0,0);
+	$pdf->Cell(0,6,$patient_fetch['age'].' tahun' ,0,1);
+	$pdf->Cell(40,6,'Tinggi Badan',0,0);
+	$pdf->Cell(3,6,':',0,0);
+	$pdf->Cell(0,6,$patient_fetch['height']. ' cm' ,0,1);
+	$pdf->Cell(40,6,'Berat Badan',0,0);
+	$pdf->Cell(3,6,':',0,0);
+	$pdf->Cell(0,6,$patient_fetch['weight']. ' kg' ,0,1);
+	$query1 = mysqli_query($connection,"SELECT * FROM account_tb");
+	$total = mysqli_num_rows($query1);
+	$no = 1;
+	$query2 = mysqli_query($connection,"SELECT * FROM checkup_result_tb WHERE patient_id='$user'");
+	$pdf->Cell(10,7,'',0,1);
+	$pdf->SetFont('Arial','B',10);
+	$pdf->Cell(8,6,'No',1,0,'C');
+	$pdf->Cell(50,6,'Nama Penyakit',1,0,'C');
+	$pdf->Cell(130,6,'Keterangan',1,1,'C');
+	while($fetch2 = mysqli_fetch_array($query2)) {	
+		$disease_query = mysqli_query($connection,"SELECT * FROM disease_tb WHERE disease_id='$fetch2[disease_id]'");
+		$disease_fetch = mysqli_fetch_array($disease_query);	
+		$pdf->Ln();
+		$pdf->Cell(8,6,$no,1,0);
+		$no++;
+		$pdf->Cell(50,6,$disease_fetch['disease_name'],1,0);
+		$pdf->MultiCell(130,5,$disease_fetch['description'], 1);
+	}
+	$no = 1;
+	$pdf->Output();
+?>
