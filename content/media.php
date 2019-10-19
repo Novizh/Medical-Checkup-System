@@ -27,7 +27,7 @@
           <a href="?page=dashboard" class="btn btn-primary">Home</a>
           <a href="?page=account_list" class="btn btn-primary">Daftar Akun</a>
           <a href="?page=patient_data" class="btn btn-primary">Data Pasien</a>
-          <a href="module/logout.php" class="btn btn-danger">Log Out</a>
+          <a href="module/logout.php" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin keluar?');">Log Out</a>
         </div>
       <?php
         } else { # Doctor's features
@@ -37,7 +37,7 @@
           <a href="?page=dashboard" class="btn btn-primary">Home</a>
           <a href="?page=patient_data" class="btn btn-primary">Data Pasien</a>
           <a href="?page=disease_list" class="btn btn-primary">Data Penyakit</a>
-          <a href="module/logout.php" class="btn btn-danger">Log out</a>
+          <a href="module/logout.php" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin keluar?');">Log out</a>
         </div>
       <?php
         }

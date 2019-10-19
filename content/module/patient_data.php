@@ -43,7 +43,7 @@
 								<td>
 									<a href="?page=patient_data&act=view&id=<?php echo $fetch['patient_id'];?>"><button type="button" class="btn btn-xs btn-primary">Lihat</button></a>
 									<a href="?page=patient_data&act=edit&id=<?php echo $fetch['patient_id'];?>"><button type="button" class="btn btn-xs btn-warning">Ubah</button></a>
-									<a href="<?php echo $action;?>?page=patient_data&act=delete&id=<?php echo $fetch['patient_id'];?>"><button type="button" class="btn btn-xs btn-danger">Hapus</button></a>
+									<a href="<?php echo $action;?>?page=patient_data&act=delete&id=<?php echo $fetch['patient_id'];?>" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');"><button type="button" class="btn btn-xs btn-danger">Hapus</button></a>
 								</td>
 							</tr>
 							<?php
